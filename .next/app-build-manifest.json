@@ -1,19 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/api/search/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
-    ],
-    "/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/layout.js"
-    ],
-    "/api/properties/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/properties/route.js"
+      "static/chunks/app/api/search/route.js"
     ]
   }
 }

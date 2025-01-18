@@ -32,14 +32,18 @@ export async function POST(req: Request) {
     console.log("Finished building embedding");
 
     //Search Supabase
+    console.log("Similarity threshold:", 0.35);
     const { data, error } = await supabaseClient.rpc("search_properties", {
         query_embedding: embedding,
-        similarity_threshold: 0.5,
+        similarity_threshold: 0.35,
         match_count: 3,
     });
 
+    console.log("Number of results:", data?.length);
+console.log("First result similarity:", data?.[0]?.similarity);
+console.log("Last result similarity:", data?.[data?.length-1]?.similarity);
     console.log("Data:", data);
-    console.timeLog("Error:", error);
+    console.log("Error:", error);
 
     if (data) {
         return NextResponse.json({ data });

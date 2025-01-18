@@ -35,19 +35,16 @@ export async function POST(req: Request) {
 
             const embedding = embeddingResponse.data[0].embedding;
 
-            const { data: insertedData, error } = await supabaseClient
+            const { error } = await supabaseClient
                 .from("properties")
                 .insert({
                     ...property,
                     embedding
                 })
-                .select();
 
             if (error) {
                 errors.push({ property, error });
-            } else {
-                results.push(insertedData);
-            }
+            } 
         } catch (error) {
             errors.push({ property, error });
         }
@@ -55,13 +52,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
         success: errors.length === 0,
-        results,
+        message: errors.length === 0 ? 'Properties uploaded successfully' : 'Some properties failed to upload',
         errors: errors.length > 0 ? errors : null
     });
 }
 
 // Type guard function to validate property data
 function isValidProperty(property: any): property is PropertyType {
-    const requiredFields = ['title', 'address', 'location', 'house_type', 'price'];
-    return requiredFields.every(field => field in property);
+    // All fields are optional, just check if it's an object
+    return typeof property === 'object' && property !== null;
 }
